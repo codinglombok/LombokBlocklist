@@ -1,0 +1,1090 @@
+{
+ "version": 1,
+ "normalize": [
+  {
+   "in": "example.com",
+   "out": "example.com"
+  },
+  {
+   "in": "EXAMPLE.com",
+   "out": "example.com"
+  },
+  {
+   "in": "Example.COM.",
+   "out": "example.com"
+  },
+  {
+   "in": "  example.com  ",
+   "out": "example.com"
+  },
+  {
+   "in": "a",
+   "out": "a"
+  },
+  {
+   "in": "a.b.c.d.e.f",
+   "out": "a.b.c.d.e.f"
+  },
+  {
+   "in": "xn--bcher-kva.example",
+   "out": "xn--bcher-kva.example"
+  },
+  {
+   "in": "_dmarc.example.com",
+   "out": "_dmarc.example.com"
+  },
+  {
+   "in": "-bad.example.com",
+   "out": null
+  },
+  {
+   "in": "bad-.example.com",
+   "out": null
+  },
+  {
+   "in": "a--b.example.com",
+   "out": "a--b.example.com"
+  },
+  {
+   "in": "",
+   "out": null
+  },
+  {
+   "in": ".",
+   "out": null
+  },
+  {
+   "in": "..",
+   "out": null
+  },
+  {
+   "in": "example..com",
+   "out": null
+  },
+  {
+   "in": ".example.com",
+   "out": null
+  },
+  {
+   "in": "example.com..",
+   "out": null
+  },
+  {
+   "in": "exa mple.com",
+   "out": null
+  },
+  {
+   "in": "exa_mple.com",
+   "out": "exa_mple.com"
+  },
+  {
+   "in": "bücher.example",
+   "out": null
+  },
+  {
+   "in": "例え.jp",
+   "out": null
+  },
+  {
+   "in": "1.2.3.4",
+   "out": "1.2.3.4"
+  },
+  {
+   "in": "0.0.0.0",
+   "out": "0.0.0.0"
+  },
+  {
+   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+   "out": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+  },
+  {
+   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+   "out": null
+  },
+  {
+   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+   "out": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+  },
+  {
+   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "out": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  {
+   "in": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+   "out": null
+  },
+  {
+   "in": "exa\tmple.com",
+   "out": null
+  },
+  {
+   "in": "\texample.com\n",
+   "out": "example.com"
+  },
+  {
+   "in": "EXAMPLE.COM\r\n",
+   "out": "example.com"
+  },
+  {
+   "in": "ex@mple.com",
+   "out": null
+  },
+  {
+   "in": "example.com/path",
+   "out": null
+  },
+  {
+   "in": "example.com:80",
+   "out": null
+  },
+  {
+   "in": "Zz9.Test",
+   "out": "zz9.test"
+  },
+  {
+   "in": "localhost",
+   "out": "localhost"
+  },
+  {
+   "in": "LOCALHOST.",
+   "out": "localhost"
+  },
+  {
+   "in": "a.b-c.d",
+   "out": "a.b-c.d"
+  },
+  {
+   "in": "a.-b.c",
+   "out": null
+  },
+  {
+   "in": "a.b-.c",
+   "out": null
+  },
+  {
+   "in": "*.example.com",
+   "out": null
+  },
+  {
+   "in": "ex*mple.com",
+   "out": null
+  }
+ ],
+ "parse": [
+  {
+   "format": "hosts",
+   "text": "# comment\n127.0.0.1 localhost\n::1 localhost ip6-localhost\n0.0.0.0 ads.example.com tracker.example.net # trailing\n0.0.0.0 ADS2.Example.com.\n  0.0.0.0   spaced.example.org\nbadline\n0.0.0.0\nnotanip evil.example.com\n0.0.0.0 bad_host!.com ok.example.com\nfe80::1%lo0 zone.example.com\n255.255.255.255 broadcasthost\n0.0.0.0 0.0.0.0\n",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "ads.example.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "tracker.example.net"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "ads2.example.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "spaced.example.org"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "ok.example.com"
+    }
+   ],
+   "skipped": 5
+  },
+  {
+   "format": "domains",
+   "text": "# comment\n! other comment\nexample.com\n*.wild.example.org\nUPPER.Example.Net.\nbad host.com\n  spaced.example.com  \ninline.example.com # note\n*.\n*.*.example.com\n.leading.example.com\n",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "example.com"
+    },
+    {
+     "action": "block",
+     "kind": "wildcard",
+     "domain": "wild.example.org"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "upper.example.net"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "spaced.example.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "inline.example.com"
+    }
+   ],
+   "skipped": 4
+  },
+  {
+   "format": "adblock",
+   "text": "[Adblock Plus 2.0]\n! comment\n||ads.example.com^\n@@||good.ads.example.com^\n||tracker.example.net^$third-party\n||nocaret.example.com\n||^\n@@||^\n##.banner\n/ads/*\n||Mixed.Case.Example^\n||trailing-dot.example.com.^\n@@||allowed.example.org^\n",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "ads.example.com"
+    },
+    {
+     "action": "allow",
+     "kind": "subtree",
+     "domain": "good.ads.example.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "mixed.case.example"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "trailing-dot.example.com"
+    },
+    {
+     "action": "allow",
+     "kind": "subtree",
+     "domain": "allowed.example.org"
+    }
+   ],
+   "skipped": 6
+  },
+  {
+   "format": "hosts",
+   "text": "",
+   "rules": [],
+   "skipped": 0
+  },
+  {
+   "format": "domains",
+   "text": "",
+   "rules": [],
+   "skipped": 0
+  },
+  {
+   "format": "adblock",
+   "text": "",
+   "rules": [],
+   "skipped": 0
+  },
+  {
+   "format": "hosts",
+   "text": "0.0.0.0 a.com\r\n0.0.0.0 b.com\r0.0.0.0 c.com\n",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "b.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "c.com"
+    }
+   ],
+   "skipped": 0
+  },
+  {
+   "format": "domains",
+   "text": "a.com\r\nb.com\rc.com\n\n\n",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "b.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "c.com"
+    }
+   ],
+   "skipped": 0
+  },
+  {
+   "format": "adblock",
+   "text": "||a.com^\r\n||b.com^\r||c.com^",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "b.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "c.com"
+    }
+   ],
+   "skipped": 0
+  },
+  {
+   "format": "hosts",
+   "text": "# only comment\n   \n\t\n",
+   "rules": [],
+   "skipped": 0
+  },
+  {
+   "format": "hosts",
+   "text": "1.2.3 bad.example.com",
+   "rules": [],
+   "skipped": 1
+  },
+  {
+   "format": "hosts",
+   "text": "1.2.3.4.5 bad.example.com",
+   "rules": [],
+   "skipped": 1
+  },
+  {
+   "format": "hosts",
+   "text": "::1",
+   "rules": [],
+   "skipped": 1
+  },
+  {
+   "format": "domains",
+   "text": "*.example.com\nexample.com\n*.example.com",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "wildcard",
+     "domain": "example.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "example.com"
+    },
+    {
+     "action": "block",
+     "kind": "wildcard",
+     "domain": "example.com"
+    }
+   ],
+   "skipped": 0
+  },
+  {
+   "format": "adblock",
+   "text": "@@||a.com^\n@@a.com^\n||a.com^ \n || a.com^",
+   "rules": [
+    {
+     "action": "allow",
+     "kind": "subtree",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "a.com"
+    }
+   ],
+   "skipped": 1
+  },
+  {
+   "format": "domains",
+   "text": "#a.com\n!b.com\n c.com",
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "c.com"
+    }
+   ],
+   "skipped": 0
+  }
+ ],
+ "match": [
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "example.com"
+    },
+    {
+     "action": "allow",
+     "kind": "exact",
+     "domain": "ok.example.com"
+    }
+   ],
+   "adds": [
+    "added",
+    "added"
+   ],
+   "size": 2,
+   "cases": [
+    {
+     "host": "example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "www.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "a.b.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "ok.example.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "exact",
+      "domain": "ok.example.com"
+     }
+    },
+    {
+     "host": "x.ok.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "example.org",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "notexample.com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "EXAMPLE.COM.",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "",
+     "verdict": "invalid",
+     "rule": null
+    },
+    {
+     "host": "bad host",
+     "verdict": "invalid",
+     "rule": null
+    },
+    {
+     "host": "EXAMPLE.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "e.xample.com",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "wildcard",
+     "domain": "example.com"
+    }
+   ],
+   "adds": [
+    "added"
+   ],
+   "size": 1,
+   "cases": [
+    {
+     "host": "example.com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "a.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "wildcard",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "a.b.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "wildcard",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "b.example.com.",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "wildcard",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "xexample.com",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "ads.example.com"
+    }
+   ],
+   "adds": [
+    "added"
+   ],
+   "size": 1,
+   "cases": [
+    {
+     "host": "ads.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "exact",
+      "domain": "ads.example.com"
+     }
+    },
+    {
+     "host": "x.ads.example.com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "example.com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "ads.example.com.",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "exact",
+      "domain": "ads.example.com"
+     }
+    },
+    {
+     "host": "ADS.EXAMPLE.COM",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "exact",
+      "domain": "ads.example.com"
+     }
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "a.com"
+    },
+    {
+     "action": "block",
+     "kind": "wildcard",
+     "domain": "a.com"
+    }
+   ],
+   "adds": [
+    "added",
+    "added",
+    "added"
+   ],
+   "size": 3,
+   "cases": [
+    {
+     "host": "a.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "exact",
+      "domain": "a.com"
+     }
+    },
+    {
+     "host": "x.a.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "wildcard",
+      "domain": "a.com"
+     }
+    },
+    {
+     "host": "y.x.a.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "wildcard",
+      "domain": "a.com"
+     }
+    },
+    {
+     "host": "b.com",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "example.com"
+    },
+    {
+     "action": "allow",
+     "kind": "subtree",
+     "domain": "example.com"
+    }
+   ],
+   "adds": [
+    "added",
+    "added"
+   ],
+   "size": 2,
+   "cases": [
+    {
+     "host": "example.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    },
+    {
+     "host": "w.example.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "subtree",
+      "domain": "example.com"
+     }
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "com"
+    },
+    {
+     "action": "allow",
+     "kind": "wildcard",
+     "domain": "safe.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "deep.safe.com"
+    }
+   ],
+   "adds": [
+    "added",
+    "added",
+    "added"
+   ],
+   "size": 3,
+   "cases": [
+    {
+     "host": "com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "com"
+     }
+    },
+    {
+     "host": "x.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "com"
+     }
+    },
+    {
+     "host": "safe.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "com"
+     }
+    },
+    {
+     "host": "a.safe.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "wildcard",
+      "domain": "safe.com"
+     }
+    },
+    {
+     "host": "deep.safe.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "wildcard",
+      "domain": "safe.com"
+     }
+    },
+    {
+     "host": "b.deep.safe.com",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "wildcard",
+      "domain": "safe.com"
+     }
+    },
+    {
+     "host": "org",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "allow",
+     "kind": "subtree",
+     "domain": "a.b.c"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "c"
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "b.c"
+    }
+   ],
+   "adds": [
+    "added",
+    "added",
+    "added"
+   ],
+   "size": 3,
+   "cases": [
+    {
+     "host": "c",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "c"
+     }
+    },
+    {
+     "host": "b.c",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "b.c"
+     }
+    },
+    {
+     "host": "a.b.c",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "subtree",
+      "domain": "a.b.c"
+     }
+    },
+    {
+     "host": "x.a.b.c",
+     "verdict": "allow",
+     "rule": {
+      "action": "allow",
+      "kind": "subtree",
+      "domain": "a.b.c"
+     }
+    },
+    {
+     "host": "x.c",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "c"
+     }
+    },
+    {
+     "host": "q.b.c",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "b.c"
+     }
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "EXAMPLE.org."
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "bad host"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": ""
+    },
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "example.org"
+    }
+   ],
+   "adds": [
+    "added",
+    "invalid",
+    "invalid",
+    "duplicate"
+   ],
+   "size": 1,
+   "cases": [
+    {
+     "host": "example.org",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.org"
+     }
+    },
+    {
+     "host": "sub.example.org",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "example.org"
+     }
+    }
+   ]
+  },
+  {
+   "rules": [],
+   "adds": [],
+   "size": 0,
+   "cases": [
+    {
+     "host": "example.com",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "",
+     "verdict": "invalid",
+     "rule": null
+    },
+    {
+     "host": "localhost",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "_dmarc.example.com"
+    },
+    {
+     "action": "block",
+     "kind": "exact",
+     "domain": "1.2.3.4"
+    }
+   ],
+   "adds": [
+    "added",
+    "added"
+   ],
+   "size": 2,
+   "cases": [
+    {
+     "host": "_dmarc.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "_dmarc.example.com"
+     }
+    },
+    {
+     "host": "x._dmarc.example.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "_dmarc.example.com"
+     }
+    },
+    {
+     "host": "1.2.3.4",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "exact",
+      "domain": "1.2.3.4"
+     }
+    },
+    {
+     "host": "9.1.2.3.4",
+     "verdict": "none",
+     "rule": null
+    },
+    {
+     "host": "example.com",
+     "verdict": "none",
+     "rule": null
+    }
+   ]
+  },
+  {
+   "rules": [
+    {
+     "action": "block",
+     "kind": "subtree",
+     "domain": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+    }
+   ],
+   "adds": [
+    "added"
+   ],
+   "size": 1,
+   "cases": [
+    {
+     "host": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+     }
+    },
+    {
+     "host": "x.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+     "verdict": "block",
+     "rule": {
+      "action": "block",
+      "kind": "subtree",
+      "domain": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com"
+     }
+    },
+    {
+     "host": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.com",
+     "verdict": "invalid",
+     "rule": null
+    }
+   ]
+  }
+ ],
+ "caseCount": 135
+}
