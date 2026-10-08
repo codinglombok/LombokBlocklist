@@ -1,0 +1,4 @@
+ads.example.com block
+x.tracker.example.net block
+ok.tracker.example.net allow
+example.org none
