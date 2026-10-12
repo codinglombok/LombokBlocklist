@@ -33,7 +33,7 @@ const IGNORED_HOSTS = new Set([
 ]);
 const trimWs = (s: string): string => s.replace(/^[ \t]+|[ \t]+$/g, "");
 
-/** Normalisasi nama host: ASCII saja, huruf kecil, satu titik akhir dibuang. null bila tidak sah. */
+/** Normalize a host name: ASCII only, lowercased, one trailing dot removed. Returns null if invalid. */
 export function normalizeHost(input: string): string | null {
   let h = input.replace(/^[ \t\r\n]+|[ \t\r\n]+$/g, "");
   h = h.replace(/[A-Z]/g, (c) => String.fromCharCode(c.charCodeAt(0) + 32));

@@ -1,16 +1,16 @@
-# Panduan Pemakaian LombokBlocklist
+# Usage Guide LombokBlocklist
 
-## 1. Instalasi
+## 1. Installation
 
-Setelah rilis: `npm install lombokblocklist` atau `pip install lombokblocklist`. Sebelum rilis, salin folder `typescript/src` atau `python/src/lombokblocklist` (tanpa dependensi).
+After release: `npm install lombokblocklist` or `pip install lombokblocklist`. Before release, copy the `typescript/src` folder or `python/src/lombokblocklist` (no dependencies).
 
-## 2. Konsep dasar
+## 2. Basic concepts
 
-Aturan berjenis exact, subtree, atau wildcard dimasukkan ke Blocklist; match(host) menormalkan host lalu menelusuri label dari kanan. Aturan allow selalu mengalahkan block. Daftar teks dibaca lewat parseList atau Blocklist.load dengan format hosts, domains, atau adblock.
+Rules of kind exact, subtree, or wildcard are added to a Blocklist; match(host) normalizes the host and walks its labels from the right. Allow rules always beat block rules. Text lists are read with parseList or Blocklist.load in hosts, domains, or adblock format.
 
-## 3. Contoh
+## 3. Examples
 
-Berkas `examples/example.ts` dan `examples/example.py` menghasilkan keluaran berikut (TypeScript; Python sama kecuali format cetak):
+`examples/example.ts` and `examples/example.py` produce the following output (TypeScript; Python is identical except for print formatting):
 
 ```
 ads.example.com block
@@ -19,7 +19,7 @@ ok.tracker.example.net allow
 example.org none
 ```
 
-Kode TypeScript:
+TypeScript code:
 
 ```ts
 import { Blocklist } from "lombokblocklist";
@@ -34,18 +34,18 @@ for (const h of ["ads.example.com", "x.tracker.example.net", "ok.tracker.example
 
 ## 4. Recipes
 
-- Daftar izin pribadi: muat daftar blokir, lalu tambahkan aturan allow dengan add({action:'allow',kind:'subtree',domain:'...'}).
-- Memeriksa mutu daftar: panggil parseList dan lihat skipped untuk mengetahui baris yang tidak didukung.
-- Penyaring umum: normalizeHost(input) sebelum membandingkan nama host dengan sumber lain.
+- Personal allow list: load a blocklist, then add allow rules with add({action:'allow',kind:'subtree',domain:'...'}).
+- List quality check: call parseList and inspect skipped to find lines that are not supported.
+- General filter: call normalizeHost(input) before comparing a host name with another source.
 
 ## 5. Common pitfalls
 
-- Tidak ada regex (disengaja: waktu pencocokan terbatas).
-- IDN tidak dikonversi; masukan harus punycode.
-- Subset adblock sangat kecil.
-- Port Rust, Go, PHP BELUM; hanya TypeScript dan Python.
-- Struktur trie memakai Map per node; belum dioptimalkan untuk jutaan aturan (belum ada benchmark).
+- No regular expressions (deliberate: bounded matching time).
+- IDN is not converted; input MUST be punycode.
+- Only a very small adblock subset is supported.
+- Rust, Go and PHP ports: NOT YET; only TypeScript and Python exist.
+- The trie uses a Map per node; not yet optimized for millions of rules (no benchmark yet).
 
-## 6. Lihat juga
+## 6. See also
 
 `SPEC_LombokBlocklist_v0.1.0.md`, `API_LombokBlocklist_v0.1.0.md`, `full_summary_project_LombokBlocklist_v0.1.0.md`.

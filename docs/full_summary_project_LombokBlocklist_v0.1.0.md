@@ -1,44 +1,44 @@
-# Ringkasan Proyek LombokBlocklist
+# Project Summary LombokBlocklist
 
-## Apa ini
+## What it is
 
 Universal domain-name rule matcher: exact, subtree and wildcard rules, allow-over-block precedence, and parsers for hosts, domain-list and adblock-style lists. Part of the Lombok Ecosystem.
 
-## Mengapa dibuat
+## Why it exists
 
-Siapa pun yang perlu mencocokkan nama host terhadap kumpulan aturan membutuhkan hal yang sama: normalisasi yang ketat, struktur pencarian yang cepat, dan aturan pengecualian yang pasti. Library ini menyediakannya tanpa dependensi, dengan hasil identik di setiap bahasa.
+Anyone who matches host names against a set of rules needs the same things: strict normalization, a fast lookup structure, and predictable exception rules. This library provides them with no dependencies and identical results in every language.
 
-## Fitur utama
+## Main features
 
-- Normalisasi nama host (ASCII, huruf kecil, batas panjang label dan total)
-- Tiga jenis aturan: exact, subtree (domain dan seluruh subdomain), wildcard (hanya subdomain)
-- Allow selalu mengalahkan block; aturan paling spesifik dikembalikan
-- Parser format hosts, domain per baris, dan subset adblock (||domain^ dan @@||domain^)
-- Pencarian O(jumlah label) pada trie label terbalik
+- Host name normalization (ASCII, lowercase, label and total length limits)
+- Three rule kinds: exact, subtree (a domain and all its subdomains), wildcard (subdomains only)
+- Allow always beats block; the most specific matching rule is returned
+- Parsers for the hosts format, one-domain-per-line lists, and a small adblock subset (||domain^ and @@||domain^)
+- Lookup in O(number of labels) on a reversed-label trie
 
-## Status saat ini
+## Current status
 
-Versi 0.1.0, belum dirilis. TypeScript dan Python lulus 135 kasus vector. Port lain belum ada.
+Version 0.1.0, not yet released. TypeScript and Python pass 135 vector cases. No other ports exist.
 
-## Contoh pemakai
+## Example use cases
 
-- Penyaring domain pada resolver, gateway, atau firewall DNS
-- Penyaring URL/host pada klien HTTP atau crawler (daftar izin dan daftar tolak)
-- Penyaring pengirim/domain email dan moderasi tautan pada formulir atau forum
-- Firmware router atau perangkat IoT yang membatasi tujuan koneksi (jejak memori kecil, tanpa regex)
+- Domain filtering in a resolver, gateway, or DNS firewall
+- Host filtering for an HTTP client or crawler (allow and deny lists)
+- Sender or link filtering for email, forms, and forum moderation
+- Router or IoT firmware that restricts connection targets (small memory footprint, no regular expressions)
 
-## Batasan yang Diketahui
+## Known Limitations
 
-- Tidak ada regex (disengaja: waktu pencocokan terbatas).
-- IDN tidak dikonversi; masukan harus punycode.
-- Subset adblock sangat kecil.
-- Port Rust, Go, PHP BELUM; hanya TypeScript dan Python.
-- Struktur trie memakai Map per node; belum dioptimalkan untuk jutaan aturan (belum ada benchmark).
+- No regular expressions (deliberate: bounded matching time).
+- IDN is not converted; input MUST be punycode.
+- Only a very small adblock subset is supported.
+- Rust, Go and PHP ports: NOT YET; only TypeScript and Python exist.
+- The trie uses a Map per node; not yet optimized for millions of rules (no benchmark yet).
 
-## Info lanjut
+## Further information
 
-SPEC: `SPEC_LombokBlocklist_v0.1.0.md`; API: `API_LombokBlocklist_v0.1.0.md`; panduan: `guide_how_to_use_LombokBlocklist_v0.1.0.md`.
+SPEC: `SPEC_LombokBlocklist_v0.1.0.md`; API: `API_LombokBlocklist_v0.1.0.md`; guide: `guide_how_to_use_LombokBlocklist_v0.1.0.md`.
 
-## Gap vs pembanding
+## Gap versus comparable libraries
 
-Pembanding: pustaka daftar-blokir DNS bawaan produk penyaring populer, tldts/psl, aho-corasick. Gap jujur: library ini tidak menandingi kecepatan automata terkompresi; keunggulannya adalah kontrak lintas bahasa yang identik dan semantik allow/block yang terdokumentasi.
+Comparable: the blocklist engines inside popular DNS filtering products, tldts/psl, aho-corasick. Honest gap: this library does not match the speed of compressed automata; its strengths are an identical cross-language contract and documented allow/block semantics.
