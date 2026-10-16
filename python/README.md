@@ -28,6 +28,7 @@ Not yet published to any registry (0.1.0 has not been released). After release:
 ```
 npm install lombokblocklist
 pip install lombokblocklist
+go get github.com/codinglombok/lombokblocklist/go
 ```
 
 ## API overview
@@ -44,7 +45,8 @@ Details: `docs/API_LombokBlocklist_v0.1.0.md`.
 |---|---|
 | TypeScript (reference) | YES, passes all 135 vector cases |
 | Python | YES, passes all 135 vector cases |
-| Rust, Go, PHP | NOT YET |
+| Go | YES, passes all 135 vector cases |
+| Rust, PHP | NOT YET |
 
 ## Standards implemented
 
@@ -55,7 +57,7 @@ The normative contract is in `docs/SPEC_LombokBlocklist_v0.1.0.md`; the vectors 
 - No regular expressions (deliberate: bounded matching time).
 - IDN is not converted; input MUST be punycode.
 - Only a very small adblock subset is supported.
-- Rust, Go and PHP ports: NOT YET; only TypeScript and Python exist.
+- Rust and PHP ports: NOT YET; TypeScript, Python and Go exist.
 - The trie uses a Map per node; not yet optimized for millions of rules (no benchmark yet).
 
 ## Development
@@ -63,6 +65,7 @@ The normative contract is in `docs/SPEC_LombokBlocklist_v0.1.0.md`; the vectors 
 ```
 node --test typescript/test/vectors.test.ts   # TypeScript (Node 22+)
 python -m pytest python/tests                 # Python 3.10+
+(cd go && go test ./...)                      # Go 1.22+
 node scripts/gen_vectors.ts                   # regenerate vectors from the TypeScript reference
 ```
 

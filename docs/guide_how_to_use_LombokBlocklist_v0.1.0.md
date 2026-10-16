@@ -2,7 +2,7 @@
 
 ## 1. Installation
 
-After release: `npm install lombokblocklist` or `pip install lombokblocklist`. Before release, copy the `typescript/src` folder or `python/src/lombokblocklist` (no dependencies).
+After release: `npm install lombokblocklist` `pip install lombokblocklist`, or `go get github.com/codinglombok/lombokblocklist/go`. Before release, copy the `typescript/src` folder or `python/src/lombokblocklist` (no dependencies).
 
 ## 2. Basic concepts
 
@@ -43,7 +43,7 @@ for (const h of ["ads.example.com", "x.tracker.example.net", "ok.tracker.example
 - No regular expressions (deliberate: bounded matching time).
 - IDN is not converted; input MUST be punycode.
 - Only a very small adblock subset is supported.
-- Rust, Go and PHP ports: NOT YET; only TypeScript and Python exist.
+- Rust and PHP ports: NOT YET; TypeScript, Python and Go exist.
 - The trie uses a Map per node; not yet optimized for millions of rules (no benchmark yet).
 
 ## 6. See also

@@ -18,7 +18,7 @@ Anyone who matches host names against a set of rules needs the same things: stri
 
 ## Current status
 
-Version 0.1.0, not yet released. TypeScript and Python pass 135 vector cases. No other ports exist.
+Version 0.1.0, not yet released. TypeScript, Python and Go pass 135 vector cases. No other ports exist.
 
 ## Example use cases
 
@@ -32,7 +32,7 @@ Version 0.1.0, not yet released. TypeScript and Python pass 135 vector cases. No
 - No regular expressions (deliberate: bounded matching time).
 - IDN is not converted; input MUST be punycode.
 - Only a very small adblock subset is supported.
-- Rust, Go and PHP ports: NOT YET; only TypeScript and Python exist.
+- Rust and PHP ports: NOT YET; TypeScript, Python and Go exist.
 - The trie uses a Map per node; not yet optimized for millions of rules (no benchmark yet).
 
 ## Further information

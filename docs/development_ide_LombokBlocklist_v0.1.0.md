@@ -3,7 +3,7 @@
 ## 1. Roadmap
 
 - 0.1.1: CI, coverage, fuzz, publish to npm/PyPI
-- 0.2.0: Rust port (no_std+alloc), Go, PHP; benchmark with millions of rules
+- 0.2.0: Rust port (no_std+alloc), PHP; benchmark with millions of rules
 - 0.3.0: optional IDN to punycode conversion; additional rule formats
 
 ## 2. Deferred scope
